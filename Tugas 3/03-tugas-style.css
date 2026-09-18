@@ -62,3 +62,14 @@ body {
     height: auto;
     border-radius: 8px;
 }
+/* ===== MODIFIER: kartu-media--wajib ===== */
+/* Aturan ini SENGAJA dibuat lebih spesifik daripada .kartu-media__deskripsi 
+   dengan cara menggabungkan 2 class dalam satu selector (descendant selector), 
+   sehingga nilai spesifisitasnya lebih tinggi dan menimpa gaya deskripsi 
+   default tanpa perlu memakai !important. */
+.kartu-media--wajib .kartu-media__deskripsi {
+    color: #b3261e;
+    font-weight: bold;
+    border-left: 4px solid #b3261e;
+    padding-left: 10px;
+}
