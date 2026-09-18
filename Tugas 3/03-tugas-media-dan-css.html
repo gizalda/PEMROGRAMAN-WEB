@@ -9,8 +9,18 @@
 <body>
 
     <main>
-        <!-- Kartu media akan ditambahkan di tahap berikutnya -->
-    </main>
+              <article class="kartu-media">
+            <picture class="kartu-media__sampul">
+                <source srcset="sampul-lebar.webp" media="(min-width: 768px)" type="image/webp">
+                <source srcset="sampul-sempit.webp" media="(max-width: 767px)" type="image/webp">
+                <img src="sampul-fallback.jpg" alt="Ilustrasi sampul materi kuliah Pemrograman Web" width="400" height="225">
+            </picture>
 
-</body>
-</html>
+            <div class="kartu-media__konten">
+                <h2 class="kartu-media__judul">Modul 3: Media Responsif dan CSS</h2>
+                <p class="kartu-media__deskripsi">
+                    Materi ini membahas cara membangun komponen multimedia yang adaptif 
+                    menggunakan elemen picture, video, dan prinsip desain responsif.
+                </p>
+            </div>
+        </article>
