@@ -53,3 +53,21 @@ body {
         width: 100%;
     }
 }
+/* ===== Layout Utama (CSS Grid kustom) ===== */
+.layout-utama {
+    display: grid;
+    grid-template-columns: 200px 1fr 220px;  /* sidebar 200px | artikel fleksibel | kanan 220px */
+    gap: 20px;
+    padding: 24px;
+}
+
+.layout-utama__sidebar,
+.layout-utama__kanan {
+    background-color: #f0f0f0;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.layout-utama__artikel {
+    background-color: #ffffff;
+}
