@@ -98,3 +98,10 @@ body {
         width: 100%;
     }
 }
+/* ===== Grid Mikro untuk Kartu Artikel ===== */
+.grid-artikel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
