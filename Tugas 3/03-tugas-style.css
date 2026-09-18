@@ -13,3 +13,52 @@ body {
     background-color: #f4f4f4;
     color: #222;
 }
+/* ===== BLOCK: kartu-media ===== */
+.kartu-media {
+    max-width: 400px;
+    margin: 40px auto;              /* margin terpusat secara horizontal */
+    background-color: #ffffff;
+    border-radius: 12px;            /* sudut melengkung */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);  /* bayangan */
+    overflow: hidden;                /* biar gambar ikut mengikuti sudut melengkung */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* transisi lembut */
+}
+
+.kartu-media:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== ELEMENT: kartu-media__sampul ===== */
+.kartu-media__sampul img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== ELEMENT: kartu-media__konten ===== */
+.kartu-media__konten {
+    padding: 16px 20px 24px;
+}
+
+/* ===== ELEMENT: kartu-media__judul ===== */
+.kartu-media__judul {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+}
+
+/* ===== ELEMENT: kartu-media__deskripsi ===== */
+.kartu-media__deskripsi {
+    margin: 0 0 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555555;
+}
+
+/* ===== ELEMENT: kartu-media__video ===== */
+.kartu-media__video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
