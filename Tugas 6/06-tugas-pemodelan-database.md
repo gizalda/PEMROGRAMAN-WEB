@@ -5,9 +5,7 @@
 - **NIM : D121241098**
 
 # 1. Deskripsi Sistem 
-E-Library Kampus merupakan sistem basis data yang digunakan untuk mengelola data dan proses peminjaman serta pengembalian buku di perpustakaan kampus. Sistem ini menyimpan informasi mengenai mahasiswa sebagai pengguna perpustakaan, data buku, data penerbit serta riwayat transaksi peminjaman dan pengembalian buku.
-
-Perancangan database ini dibuat menggunakan model basis data relasional agar data tersimpan secara terstruktur, mengurangi redundansi, serta menjaga konsistensi dan integritas data.
+E-Library Kampus merupakan sistem basis data yang digunakan untuk mengelola data dan proses peminjaman serta pengembalian buku di perpustakaan kampus. Sistem ini menyimpan informasi mengenai mahasiswa sebagai pengguna perpustakaan, data buku, data penerbit serta riwayat transaksi peminjaman dan pengembalian buku. Perancangan database ini dibuat menggunakan model basis data relasional agar data tersimpan secara terstruktur, mengurangi redundansi, serta menjaga konsistensi dan integritas data.
 
 # 2. Tujuan Perancangan Database
 Tujuannya adalah :
@@ -284,7 +282,5 @@ erDiagram
     }
 ```
 # 8. Kesimpulan 
-Perancangan database E-Library Kampus menghasilkan empat entitas utama yaitu Mahasiswa, Buku, Penerbit dan Transaksi Peminjaman. Proses normalisasi dilakukan mulai dari UNF, 1NF, 2NF, hingga 3NF untuk mengurangi redundansi data dan mencegah terjadinya anomali pada proses
-penyimpanan, perubahan maupun penghapusan data.
-
-Hasil akhir perancangan terdiri dari empat tabel yang saling berhubungan menggunakan Primary Key dan Foreign Key. Relasi tersebut memungkinkan sistem untuk menyimpan data mahasiswa, buku, penerbit, serta riwayat peminjaman dan pengembalian secara terstruktur. Rancangan database ini dapat digunakan sebagai dasar dalam pengembangan sistem E-Library Kampus berbasis web.
+Perancangan database E-Library Kampus menghasilkan empat entitas utama yaitu Mahasiswa, Buku, Penerbit dan Transaksi Peminjaman. Proses normalisasi dilakukan mulai dari UNF, 1NF, 2NF hingga 3NF untuk mengurangi redundansi data dan mencegah terjadinya anomali pada proses
+penyimpanan, perubahan maupun penghapusan data. Hasil akhir perancangan terdiri dari empat tabel yang saling berhubungan menggunakan Primary Key dan Foreign Key. Relasi tersebut memungkinkan sistem untuk menyimpan data mahasiswa, buku, penerbit, serta riwayat peminjaman dan pengembalian secara terstruktur. Rancangan database ini dapat digunakan sebagai dasar dalam pengembangan sistem E-Library Kampus berbasis web.
