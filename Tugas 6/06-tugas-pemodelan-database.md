@@ -181,3 +181,110 @@ Setelah melalui tahapan UNF, 1NF, 2NF, dan 3NF, struktur database terdiri dari e
 4. **Transaksi Peminjaman**
 
 Struktur tersebut mengurangi redundansi data dan membuat hubungan antar entitas menjadi lebih terorganisir.
+
+# 6. Rancangan Tabel Akhir
+Setelah proses normalisasi hingga 3NF, diperoleh empat tabel utama yang digunakan dalam database E-Library Kampus, yaitu tabel Mahasiswa, Penerbit, Buku, dan Transaksi Peminjaman.
+
+## 6.1 Tabel Mahasiswa
+
+| Field | Tipe Data | Key | Keterangan |
+|---|---|---|---|
+| nim | VARCHAR(20) | PK | Nomor induk mahasiswa |
+| nama_mahasiswa | VARCHAR(100) | - | Nama mahasiswa |
+| program_studi | VARCHAR(100) | - | Program studi mahasiswa |
+| alamat | TEXT | - | Alamat mahasiswa |
+| no_telepon | VARCHAR(20) | - | Nomor telepon mahasiswa |
+
+Primary Key pada tabel Mahasiswa adalah `nim`.
+
+## 6.2 Tabel Penerbit
+
+| Field | Tipe Data | Key | Keterangan |
+|---|---|---|---|
+| id_penerbit | INT | PK | Identitas unik penerbit |
+| nama_penerbit | VARCHAR(100) | - | Nama penerbit |
+| alamat_penerbit | TEXT | - | Alamat penerbit |
+| no_telepon | VARCHAR(20) | - | Nomor telepon penerbit |
+
+Primary Key pada tabel Penerbit adalah `id_penerbit`.
+
+## 6.3 Tabel Buku
+
+| Field | Tipe Data | Key | Keterangan |
+|---|---|---|---|
+| id_buku | INT | PK | Identitas unik buku |
+| judul_buku | VARCHAR(200) | - | Judul buku |
+| tahun_terbit | YEAR | - | Tahun terbit buku |
+| kategori | VARCHAR(100) | - | Kategori buku |
+| stok | INT | - | Jumlah buku yang tersedia |
+| id_penerbit | INT | FK | Identitas penerbit buku |
+
+Primary Key pada tabel Buku adalah `id_buku`.
+
+Foreign Key `id_penerbit` mengacu pada `id_penerbit` pada tabel Penerbit.
+
+## 6.4 Tabel Transaksi_Peminjaman
+
+| Field | Tipe Data | Key | Keterangan |
+|---|---|---|---|
+| id_transaksi | INT | PK | Identitas unik transaksi |
+| nim | VARCHAR(20) | FK | Mahasiswa yang melakukan peminjaman |
+| id_buku | INT | FK | Buku yang dipinjam |
+| tanggal_pinjam | DATE | - | Tanggal peminjaman |
+| tanggal_kembali | DATE | - | Tanggal pengembalian |
+| status | VARCHAR(20) | - | Status transaksi |
+
+Primary Key pada tabel Transaksi_Peminjaman adalah `id_transaksi`.
+
+Foreign Key `nim` mengacu pada `nim` pada tabel Mahasiswa.
+
+Foreign Key `id_buku` mengacu pada `id_buku` pada tabel Buku.
+
+# 7. Diagram Relasi Database
+Diagram berikut menunjukkan hubungan antar tabel pada database E-Library Kampus.
+
+```mermaid
+erDiagram
+
+    MAHASISWA ||--o{ TRANSAKSI_PEMINJAMAN : melakukan
+    BUKU ||--o{ TRANSAKSI_PEMINJAMAN : dipinjam
+    PENERBIT ||--o{ BUKU : menerbitkan
+
+    MAHASISWA {
+        varchar nim PK
+        varchar nama_mahasiswa
+        varchar program_studi
+        text alamat
+        varchar no_telepon
+    }
+
+    PENERBIT {
+        int id_penerbit PK
+        varchar nama_penerbit
+        text alamat_penerbit
+        varchar no_telepon
+    }
+
+    BUKU {
+        int id_buku PK
+        varchar judul_buku
+        year tahun_terbit
+        varchar kategori
+        int stok
+        int id_penerbit FK
+    }
+
+    TRANSAKSI_PEMINJAMAN {
+        int id_transaksi PK
+        varchar nim FK
+        int id_buku FK
+        date tanggal_pinjam
+        date tanggal_kembali
+        varchar status
+    }
+```
+# 8. Kesimpulan 
+Perancangan database E-Library Kampus menghasilkan empat entitas utama yaitu Mahasiswa, Buku, Penerbit dan Transaksi Peminjaman. Proses normalisasi dilakukan mulai dari UNF, 1NF, 2NF, hingga 3NF untuk mengurangi redundansi data dan mencegah terjadinya anomali pada proses
+penyimpanan, perubahan maupun penghapusan data.
+
+Hasil akhir perancangan terdiri dari empat tabel yang saling berhubungan menggunakan Primary Key dan Foreign Key. Relasi tersebut memungkinkan sistem untuk menyimpan data mahasiswa, buku, penerbit, serta riwayat peminjaman dan pengembalian secara terstruktur. Rancangan database ini dapat digunakan sebagai dasar dalam pengembangan sistem E-Library Kampus berbasis web.
