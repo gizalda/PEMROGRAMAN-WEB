@@ -33,4 +33,27 @@ class GuestBook
 
         return $stmt->fetchAll();
     }
+     
+    public function validasi(string $nama, string $email, string $pesan): array
+    {
+        $errors = [];
+
+        if ($nama === '') {
+            $errors[] = 'Nama tidak boleh kosong.';
+        } elseif (mb_strlen($nama) > 100) {
+            $errors[] = 'Nama maksimal 100 karakter.';
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Format email tidak valid.';
+        } elseif (mb_strlen($email) > 100) {
+            $errors[] = 'Email maksimal 100 karakter.';
+        }
+
+        if (mb_strlen($pesan) < 5) {
+            $errors[] = 'Pesan minimal 5 karakter.';
+        }
+
+        return $errors;
+    }
 }
