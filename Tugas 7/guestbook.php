@@ -35,3 +35,38 @@ if (empty($_SESSION['csrf_token'])) {
 }
 $errors = [];
 $old    = ['nama' => '', 'email' => '', 'pesan' => ''];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $token = $_POST['csrf_token'] ?? '';
+
+    if (!hash_equals($_SESSION['csrf_token'], (string) $token)) {
+        http_response_code(403);
+        $errors[] = 'Token CSRF tidak valid. Muat ulang halaman lalu coba lagi.';
+    } else {
+        $old['nama']  = trim((string) ($_POST['nama'] ?? ''));
+        $old['email'] = trim((string) ($_POST['email'] ?? ''));
+        $old['pesan'] = trim((string) ($_POST['pesan'] ?? ''));
+
+        $errors = $guestBook->validasi($old['nama'], $old['email'], $old['pesan']);
+
+        if (empty($errors)) {
+            try {
+                $guestBook->simpan($old['nama'], $old['email'], $old['pesan']);
+
+                // Token diperbarui, lalu redirect (Post/Redirect/Get)
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                $_SESSION['flash']      = 'Pesan berhasil dikirim. Terima kasih!';
+                header('Location: guestbook.php');
+                exit;
+            } catch (PDOException $ex) {
+                error_log($ex->getMessage());
+                $errors[] = 'Terjadi kesalahan saat menyimpan pesan.';
+            }
+        }
+    }
+}
+
+$flash = $_SESSION['flash'] ?? null;
+unset($_SESSION['flash']);
+
+$daftarPesan = $guestBook->ambilSemua();
