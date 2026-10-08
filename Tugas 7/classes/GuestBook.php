@@ -1,13 +1,22 @@
 <?php
 declare(strict_types=1);
+
+/**
+ * Kelas GuestBook
+ * Mengelola penyimpanan dan pengambilan pesan buku tamu melalui PDO.
+ */
 class GuestBook
 {
     private PDO $pdo;
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
-       
+
+    /**
+     * Menyimpan pesan baru dengan prepared statement (INSERT).
+     */
     public function simpan(string $nama, string $email, string $pesan): bool
     {
         $sql = 'INSERT INTO buku_tamu (nama, email, pesan)
@@ -20,7 +29,10 @@ class GuestBook
             ':pesan' => $pesan,
         ]);
     }
-    
+
+    /**
+     * Mengambil semua pesan, terbaru di atas, dengan prepared statement (SELECT).
+     */
     public function ambilSemua(int $limit = 50): array
     {
         $sql = 'SELECT id, nama, email, pesan, tanggal_kirim
@@ -33,7 +45,10 @@ class GuestBook
 
         return $stmt->fetchAll();
     }
-     
+
+    /**
+     * Validasi masukan. Mengembalikan array pesan galat (kosong = valid).
+     */
     public function validasi(string $nama, string $email, string $pesan): array
     {
         $errors = [];
