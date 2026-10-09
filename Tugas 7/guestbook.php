@@ -1,4 +1,3 @@
-
 <?php
 declare(strict_types=1);
 
@@ -6,16 +5,19 @@ session_start();
 
 require_once __DIR__ . '/classes/GuestBook.php';
 
+// ---------- Konfigurasi koneksi (sesuaikan dengan MySQL kamu) ----------
 const DB_HOST = '127.0.0.1';
 const DB_NAME = 'perpustakaan';
 const DB_USER = 'root';
-const DB_PASS = 'Gizalda08052006**';
+const DB_PASS = '';
 
+// Helper sanitasi keluaran (cegah XSS)
 function e(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+// ---------- Koneksi PDO ----------
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -35,6 +37,7 @@ try {
 
 $guestBook = new GuestBook($pdo);
 
+// ---------- Token CSRF ----------
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -42,6 +45,7 @@ if (empty($_SESSION['csrf_token'])) {
 $errors = [];
 $old    = ['nama' => '', 'email' => '', 'pesan' => ''];
 
+// ---------- Proses form ----------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['csrf_token'] ?? '';
 
@@ -72,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// Pesan sukses (sekali tampil)
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
@@ -84,17 +89,64 @@ $daftarPesan = $guestBook->ambilSemua();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Buku Tamu Perpustakaan</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #222; }
-        h1, h2 { margin-bottom: .5rem; }
-        label { display: block; margin-top: .8rem; font-weight: bold; }
-        input, textarea { width: 100%; padding: .5rem; box-sizing: border-box; }
-        button { margin-top: 1rem; padding: .6rem 1.2rem; cursor: pointer; }
-        .alert { padding: .7rem 1rem; margin: 1rem 0; border-radius: 4px; }
-        .alert-error { background: #fde8e8; color: #9b1c1c; }
-        .alert-success { background: #e6f6ea; color: #1e6b33; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { border: 1px solid #ccc; padding: .5rem; text-align: left; vertical-align: top; }
-        th { background: #f2f2f2; }
+        * { box-sizing: border-box; }
+        html { background: #eef2f7; }
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 2rem 1rem 3rem;
+            color: #1f2937;
+        }
+        h1 { text-align: center; color: #1e3a8a; margin-bottom: 1.5rem; }
+        h2 { color: #1e3a8a; margin-top: 2.5rem; }
+        form {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+        }
+        label { display: block; margin-top: 1rem; font-weight: 600; }
+        input, textarea {
+            width: 100%;
+            padding: .65rem .8rem;
+            margin-top: .35rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font: inherit;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .2);
+        }
+        button {
+            margin-top: 1.2rem;
+            padding: .7rem 1.6rem;
+            background: #2563eb;
+            color: #fff;
+            border: 0;
+            border-radius: 8px;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        button:hover { background: #1d4ed8; }
+        .alert { padding: .8rem 1rem; margin: 1rem 0; border-radius: 8px; }
+        .alert ul { margin: 0; padding-left: 1.2rem; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
+        .alert-success { background: #dcfce7; color: #166534; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+        }
+        th, td { padding: .75rem; text-align: left; vertical-align: top; border-bottom: 1px solid #e5e7eb; }
+        th { background: #1e3a8a; color: #fff; }
+        tr:last-child td { border-bottom: 0; }
     </style>
 </head>
 <body>
